@@ -1,0 +1,16 @@
+FROM thanos/docker-gobjects:gobuildimage
+
+LABEL app="build-gobjects"
+LABEL REPO="https://github.com/thanos/gobjects"
+
+ENV GOROOT=/usr/lib/go \
+    GOPATH=/gopath \
+    GOBIN=/gopath/bin \
+    PROJPATH=/gopath/src/github.com/thanos/gobjects
+
+# Because of https://github.com/docker/docker/issues/14914
+ENV PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+WORKDIR /gopath/src/github.com/thanos/gobjects
+
+CMD ["make","build-alpine"]
